@@ -3,11 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && npm start",
     "server:test": "cd server && npm run test",
-    "test": "npm run server:test"
+    "server:build": "cd server && npm run build",
+    "test": "npm run server:test",
+    "client": "cd client && npm run dev",
+    "client:build": "cd client && npm run build",
+    "build": "npm run server:build && npm run client:build"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
 }
