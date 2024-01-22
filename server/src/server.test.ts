@@ -13,6 +13,13 @@ describe('server', () => {
 
   it('should use Helmet middleware', async () => {
     const res = await request(server).options('/');
+    console.log(res.headers);
     expect(res.header['x-dns-prefetch-control']).toBe('off');
+  });
+
+  it('should use CORS middleware', async () => {
+    const res = await request(server).options('/');
+    expect(res.header['access-control-allow-methods']).toBe('POST,OPTIONS');
+    expect(res.header['access-control-allow-headers']).toBe('Content-Type');
   });
 });

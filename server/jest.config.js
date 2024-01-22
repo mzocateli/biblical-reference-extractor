@@ -4,6 +4,7 @@ module.exports = {
   collectCoverage: true,
   coverageReporters: ['text', 'lcov'],
   coverageDirectory: 'coverage',
+  setupFilesAfterEnv: ['./jest.setup.ts'],
   coverageThreshold: {
     global: {
       branches: 100,
