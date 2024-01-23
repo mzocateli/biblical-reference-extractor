@@ -16,8 +16,12 @@ router.options('*', (req, res) => {
   res.status(200).send();
 });
 
-router.all('*', (req, res) => {
+router.all('/', (req, res) => {
   res.status(405).send('Method not allowed');
+});
+
+router.all('*', (req, res) => {
+  res.status(404).send('Not found');
 });
 
 export default router;

@@ -40,4 +40,10 @@ describe('Routes', () => {
     expect(response.status).toBe(405);
     expect(response.text).toBe('Method not allowed');
   });
+
+  it('should respond with 404 for any other request at any route', async () => {
+    const response = await request(app).get('/any-other-route');
+    expect(response.status).toBe(404);
+    expect(response.text).toBe('Not found');
+  });
 });

@@ -15,20 +15,20 @@ describe('Middlewares', () => {
   });
 
   describe('handleJsonError', () => {
-    it('should handle JSON parsing error', () => {
-      const mockError = new SyntaxError();
-      (mockError as any).body = '';
-
-      handleJsonError(mockError, mockRequest as Request, mockResponse as Response, nextFunction);
-
-      expect(mockResponse.status).toHaveBeenCalledWith(400);
-      expect(mockResponse.send).toHaveBeenCalledWith('Invalid JSON');
+    it('should handle valid json', () => {
+      mockRequest.body = {
+        text: 'validText',
+        translation: 'nvi',
+      };
+      handleJsonError(new Error(), mockRequest as Request, mockResponse as Response, nextFunction);
+      expect(nextFunction).toHaveBeenCalled();
     });
 
-    it('should call next function if no JSON parsing error', () => {
-      const mockError = new Error();
-      handleJsonError(mockError, mockRequest as Request, mockResponse as Response, nextFunction);
-      expect(nextFunction).toHaveBeenCalledWith();
+    it('should return 400 if invalid json', () => {
+      mockRequest.body = '{';
+      handleJsonError(new Error(), mockRequest as Request, mockResponse as Response, nextFunction);
+      expect(mockResponse.status).toHaveBeenCalledWith(400);
+      expect(mockResponse.send).toHaveBeenCalledWith('Invalid JSON');
     });
   });
 

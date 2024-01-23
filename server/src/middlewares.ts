@@ -2,10 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 import { Translation } from './types/bibleData.type';
 
 export function handleJsonError(err: Error, req: Request, res: Response, next: NextFunction) {
-  if (err instanceof SyntaxError && 'body' in err) {
-    return res.status(400).send('Invalid JSON');
+  if (req.body && typeof req.body !== 'object') {
+    res.status(400).send('Invalid JSON');
+  } else {
+    next();
   }
-  next();
 }
 
 export function validatePostRequest(req: Request, res: Response, next: NextFunction) {
