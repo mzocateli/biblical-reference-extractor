@@ -1,4 +1,4 @@
-import { handleJsonError, validatePostRequest } from './middlewares';
+import { handleJsonError, logReqs, validatePostRequest } from './middlewares';
 import { NextFunction, Request, Response } from 'express';
 
 describe('Middlewares', () => {
@@ -78,6 +78,21 @@ describe('Middlewares', () => {
       validatePostRequest(mockRequest as Request, mockResponse as Response, nextFunction);
       expect(mockResponse.status).toHaveBeenCalledWith(400);
       expect(mockResponse.send).toHaveBeenCalledWith('Invalid translation');
+    });
+  });
+  describe('logReqs', () => {
+    it('should log requests', () => {
+      mockRequest = {
+        method: 'GET',
+        url: '/',
+        protocol: 'http',
+        hostname: 'localhost',
+        path: '/',
+        ip: '::1',
+      };
+      const consoleLog = jest.spyOn(console, 'log').mockImplementation(() => { });
+      logReqs(mockRequest as Request, mockResponse as Response, nextFunction);
+      expect(consoleLog).toHaveBeenCalledWith('Method: GET | URL: / | Source http://localhost/ from ::1');
     });
   });
 });
