@@ -27,3 +27,8 @@ export function validatePostRequest(req: Request, res: Response, next: NextFunct
 
   next();
 }
+
+export function logReqs(req: Request, res: Response, next: NextFunction) {
+  console.log(`Method: ${req.method} | URL: ${req.url} | Source ${req.protocol}://${req.hostname}${req.path} from ${req.ip}`);
+  next();
+}

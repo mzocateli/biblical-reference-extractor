@@ -1,6 +1,6 @@
 import express, { json } from 'express';
 import helmet from 'helmet';
-import { handleJsonError } from './middlewares';
+import { handleJsonError, logReqs } from './middlewares';
 import router from './routes';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -9,6 +9,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
+app.use(logReqs);
 app.use(json());
 app.use(helmet());
 app.use(cors({ origin: process.env.CLIENT_URL, methods: ['POST', 'OPTIONS'], allowedHeaders: ['Content-Type'] }));
